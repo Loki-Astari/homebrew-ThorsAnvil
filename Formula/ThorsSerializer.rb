@@ -19,7 +19,7 @@ end
 class Thorsserializer < Formula
   desc "Declarative Serialization Library for C++. Serializes in Json/Yaml"
   homepage "https://github.com/Loki-Astari/ThorsSerializer"
-  url "https://github.com/Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.6"
+  url "https://github.com/Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.7"
 
   ENV["COV"] = "gcov"
 
