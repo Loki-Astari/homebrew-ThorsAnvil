@@ -19,7 +19,7 @@ end
 class Thorsserializer < Formula
   desc "Declarative Serialization Library for C++. Serializes in Json/Yaml"
   homepage "https://github.com/Loki-Astari/ThorsSerializer"
-  url "https://github.com/Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.5"
+  url "https://github.com/Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.6"
 
   ENV["COV"]  = "gcov"
 
@@ -28,7 +28,6 @@ class Thorsserializer < Formula
     system "make", "install"
   end
 
-  depends_on "wget"
   depends_on "libyaml"
 
   test do
