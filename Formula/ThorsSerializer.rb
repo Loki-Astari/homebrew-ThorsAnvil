@@ -1,8 +1,14 @@
 class GitWithGitAt < GitHubGitDownloadStrategy
   def update_submodules
     if ! File.exist?(".firstTime")
+        # I use git@github.com for all sub-modules.
+        # We can not assume all users have keys on github so this will not work
+        # The following converts build into an https url. The .configure script
+        # will convert all other sub-modules with the "--with-thor-build-on-travis" flag.
+        # On subsequent calls we can use the standard version of update_submodules
         system "mv", ".gitmodules", "gitmodules.old"
         system("sed -e 's#git@\\([^:]*\\):#https://\\1/#' gitmodules.old > .gitmodules")
+        system "git", "submodule", "update", "--init"
         File.open(".firstTime", "w") {}
     else
         super
@@ -13,17 +19,17 @@ end
 class Thorsserializer < Formula
   desc "Declarative Serialization Library for C++. Serializes in Json/Yaml"
   homepage "https://github.com/Loki-Astari/ThorsSerializer"
-  url "git@github.com:Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.2"
+  url "https://github.com/Loki-Astari/ThorsSerializer.git", :using => GitWithGitAt, :tag => "1.5.2"
 
   ENV["COV"]  = "gcov"
 
   def install
-    system "./configure", "--disable-binary", "--disable-vera", "--prefix=#{prefix}"
+    system "./configure", "--disable-binary", "--disable-vera", "--with-thor-build-on-travis", "--prefix=#{prefix}"
     system "make", "install"
   end
 
   depends_on "wget"
-  depends_on "cmake"
+  depends_on "libyaml"
 
   test do
     system "false"
