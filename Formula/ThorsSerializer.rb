@@ -14,36 +14,36 @@ class Thorsserializer < Formula
 
   test do
     (testpath/"test.cpp").write <<~EOS
-        #include "ThorSerialize/JsonThor.h"
-        #include "ThorSerialize/SerUtil.h"
-        #include <sstream>
-        #include <iostream>
-        #include <string>
+      #include "ThorSerialize/JsonThor.h"
+      #include "ThorSerialize/SerUtil.h"
+      #include <sstream>
+      #include <iostream>
+      #include <string>
 
-        struct Block
-        {
-            std::string             key;
-            int                     code;
-        };
-        ThorsAnvil_MakeTrait(Block, key, code);
+      struct Block
+      {
+          std::string             key;
+          int                     code;
+      };
+      ThorsAnvil_MakeTrait(Block, key, code);
 
-        int main()
-        {
-            using ThorsAnvil::Serialize::jsonImport;
-            using ThorsAnvil::Serialize::jsonExport;
+      int main()
+      {
+          using ThorsAnvil::Serialize::jsonImport;
+          using ThorsAnvil::Serialize::jsonExport;
 
-            std::stringstream   inputData(R"({"key":"XYZ","code":37373})");
+          std::stringstream   inputData(R"({"key":"XYZ","code":37373})");
 
-            Block    object;
-            inputData >> jsonImport(object);
+          Block    object;
+          inputData >> jsonImport(object);
 
-            if (object.key != "XYZ" || object.code != 37373) {
-                std::cerr << "Fail\n";
-                return 1;
-            }
-            std::cerr << "OK\n";
-            return 0;
-        }
+          if (object.key != "XYZ" || object.code != 37373) {
+              std::cerr << "Fail\n";
+              return 1;
+          }
+          std::cerr << "OK\n";
+          return 0;
+      }
     EOS
     system ENV.cc, "-std=c++14", "test.cpp", "-o", "test",
                    "-I#{include}",
@@ -51,5 +51,4 @@ class Thorsserializer < Formula
                    "-lThorSerialize17"
     system "./test"
   end
-
 end
