@@ -48,10 +48,10 @@ class Thorsserializer < Formula
           return 0;
       }
     EOS
-    system ENV.cc, "-std=c++14", "test.cpp", "-o", "test",
-                   "-I#{include}",
-                   "-L#{lib}",
-                   "-lThorSerialize17"
+    system ENV.cxx, "-std=c++14", "test.cpp", "-o", "test",
+                    "-I#{include}",
+                    "-L#{lib}",
+                    "-lThorSerialize17"
     system "./test"
   end
 end
