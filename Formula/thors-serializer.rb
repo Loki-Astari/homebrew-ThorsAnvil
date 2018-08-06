@@ -1,18 +1,19 @@
-class Thorsserializer < Formula
-  desc "Declarative Serialization Library (Json/Yaml) for C++"
+class ThorsSerializer < Formula
+  desc "Declarative serialization library (JSON/YAML) for C++"
   homepage "https://github.com/Loki-Astari/ThorsSerializer"
   url "https://github.com/Loki-Astari/ThorsSerializer.git",
-    :tag => "1.5.7",
-    :revision => "c391b49a36c7432a3fadbbb3e602bba1f61d4078"
+      :tag => "1.5.7",
+      :revision => "c391b49a36c7432a3fadbbb3e602bba1f61d4078"
 
   depends_on "libyaml"
+
+  needs :cxx14
 
   def install
     ENV["COV"] = "gcov"
 
     system "./configure", "--disable-binary",
                           "--disable-vera",
-                          "--with-thor-build-on-travis",
                           "--prefix=#{prefix}"
     system "make", "install"
   end
@@ -51,9 +52,7 @@ class Thorsserializer < Formula
       }
     EOS
     system ENV.cxx, "-std=c++14", "test.cpp", "-o", "test",
-                    "-I#{include}",
-                    "-L#{lib}",
-                    "-lThorSerialize17"
+           "-I#{include}", "-L#{lib}", "-lThorSerialize17"
     system "./test"
   end
 end
